@@ -9,10 +9,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.characterlist10.characterList.presentation.CharacterListScreen
+import com.example.characterlist10.characterList.presentation.CharacterViewModel
 import com.example.characterlist10.ui.theme.CharacterList10Theme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,28 +28,20 @@ class MainActivity : ComponentActivity() {
         setContent {
             CharacterList10Theme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
+
+                    val viewModel: CharacterViewModel = hiltViewModel()
+                    val state by viewModel.state.collectAsStateWithLifecycle()
+
+                    LaunchedEffect(Unit) {
+                        viewModel.fetchCharacters()
+                    }
+
+                    CharacterListScreen(
+                        modifier = Modifier.padding(innerPadding),
+                        characterListState = state
                     )
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    CharacterList10Theme {
-        Greeting("Android")
     }
 }

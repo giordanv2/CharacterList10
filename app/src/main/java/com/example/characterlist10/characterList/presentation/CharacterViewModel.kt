@@ -27,7 +27,7 @@ class CharacterViewModel @Inject constructor (
     private val _state = MutableStateFlow(CharacterListState())
     val state: StateFlow<CharacterListState> get() = _state
 
-    fun getAllCharacters() {
+    fun fetchCharacters() {
         _state.update { it.copy(isLoading = true) }
         try {
             viewModelScope.launch {

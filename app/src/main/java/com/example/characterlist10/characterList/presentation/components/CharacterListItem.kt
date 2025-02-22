@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -43,13 +44,14 @@ fun CharacterListItem(
         modifier = Modifier
             .fillMaxWidth()
             .height(110.dp)
+            .padding(4.dp)
             .background(MaterialTheme.colorScheme.background),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         
         AsyncImage(
-            model = character,
+            model = character.image,
             contentDescription = null,
             placeholder = painterResource(R.drawable.ic_launcher_foreground)
         )

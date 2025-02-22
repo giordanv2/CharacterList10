@@ -19,7 +19,7 @@ object NetworkModule {
     @Singleton
     fun provideRetrofit(): Retrofit {
         val retrofit = Retrofit.Builder()
-            .baseUrl("www.example.com")
+            .baseUrl("https://rickandmortyapi.com/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         return retrofit
