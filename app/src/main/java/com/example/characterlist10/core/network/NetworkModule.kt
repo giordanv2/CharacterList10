@@ -1,5 +1,8 @@
 package com.example.characterlist10.core.network
 
+import com.example.characterlist10.characterList.data.repository.CharacterRepositoryImpl
+import com.example.characterlist10.characterList.data.responses.CharacterApi
+import com.example.characterlist10.characterList.domain.repository.CharacterRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,5 +23,11 @@ object NetworkModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         return retrofit
+    }
+
+    @Provides
+    @Singleton
+    fun provideCharacterRepository(api: CharacterApi): CharacterRepository {
+        return CharacterRepositoryImpl(api)
     }
 }
