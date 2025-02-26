@@ -3,6 +3,7 @@ package com.example.characterlist10.core.network
 import com.example.characterlist10.characterList.data.repository.CharacterRepositoryImpl
 import com.example.characterlist10.characterList.data.responses.CharacterApi
 import com.example.characterlist10.characterList.domain.repository.CharacterRepository
+import com.example.characterlist10.core.database.dao.CharacterDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,7 +28,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideCharacterRepository(api: CharacterApi): CharacterRepository {
-        return CharacterRepositoryImpl(api)
+    fun provideCharacterRepository(api: CharacterApi, dao: CharacterDao): CharacterRepository {
+        return CharacterRepositoryImpl(api, dao)
     }
 }

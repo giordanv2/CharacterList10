@@ -17,8 +17,9 @@ import com.example.characterlist10.ui.theme.CharacterList10Theme
 
 @Composable
 fun CharacterListScreen(
-    modifier: Modifier = Modifier,
-    characterListState: CharacterListState
+    characterListState: CharacterListState,
+    onEvent: (CharacterListEvent) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     LazyColumn(
         modifier = modifier.background(Color.Blue)
@@ -26,9 +27,15 @@ fun CharacterListScreen(
         items(characterListState.characterList) {
             CharacterListItem(
                 character = it,
-                isChecked = false, //change flag
-                checkedIcon = { Icon(Icons.Filled.Favorite,null) },
-                uncheckedIcon = { Icon(Icons.Outlined.FavoriteBorder,null) }
+                checkedIcon = { Icon(Icons.Filled.Favorite, null) },
+                uncheckedIcon = { Icon(Icons.Outlined.FavoriteBorder, null) },
+                isFavorite = it.id in characterListState.favoriteCharacterIds,
+                onFavoriteToggle = { character, isFavorite ->
+                    onEvent(CharacterListEvent.ToggleFavorite(
+                        character = character,
+                        isFavorite = isFavorite
+                    ))
+                }
             )
         }
     }
@@ -39,7 +46,8 @@ fun CharacterListScreen(
 fun CharacterListScreenPreview() {
     CharacterList10Theme { 
         CharacterListScreen(
-            characterListState = CharacterListState(characterList = characterList)
+            characterListState = CharacterListState(characterList = characterList),
+            onEvent = { _, -> }
         )
     }
 }

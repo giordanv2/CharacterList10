@@ -25,4 +25,12 @@ class CharacterRepositoryImpl @Inject constructor(
             characters
         }
     }
+
+    override suspend fun addFavorite(character: Character) {
+        characterDao.insertCharacter(character.toEntity())
+    }
+
+    override suspend fun removeFavorite(id: String) {
+        characterDao.deleteCharacterById(id)
+    }
 }

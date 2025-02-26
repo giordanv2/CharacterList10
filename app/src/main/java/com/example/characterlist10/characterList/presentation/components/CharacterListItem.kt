@@ -34,7 +34,8 @@ import com.example.characterlist10.ui.theme.CharacterList10Theme
 @Composable
 fun CharacterListItem(
     character: Character,
-    isChecked: Boolean,
+    isFavorite: Boolean,
+    onFavoriteToggle: (Character, Boolean) -> Unit,
     checkedIcon: @Composable () -> Unit,
     uncheckedIcon: @Composable () -> Unit,
     modifier: Modifier = Modifier
@@ -73,15 +74,15 @@ fun CharacterListItem(
         }
 
         IconToggleButton(
-            checked = isChecked,
-            onCheckedChange = { TODO() },
+            checked = isFavorite,
+            onCheckedChange = { onFavoriteToggle(character, !isFavorite) },
             colors = IconButtonDefaults.iconToggleButtonColors(
                 contentColor = contentColor,
                 checkedContainerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
                 checkedContentColor = contentColor
             )
         ) {
-            if(isChecked) checkedIcon() else uncheckedIcon()
+            if(isFavorite) checkedIcon() else uncheckedIcon()
         }
 
         Spacer(modifier = Modifier.size(0.dp))
@@ -94,9 +95,10 @@ fun CharacterListItemPreview() {
     CharacterList10Theme {
         CharacterListItem(
             character = character,
-            isChecked = true,
+            isFavorite = true,
             checkedIcon = { Icon(Icons.Filled.Favorite, null) },
             uncheckedIcon = { Icon(Icons.Outlined.FavoriteBorder, null) },
+            onFavoriteToggle = { _, _, -> },
         )
     }
 }

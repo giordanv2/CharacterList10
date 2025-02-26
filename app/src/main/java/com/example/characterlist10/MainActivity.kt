@@ -38,7 +38,8 @@ class MainActivity : ComponentActivity() {
 
                     CharacterListScreen(
                         modifier = Modifier.padding(innerPadding),
-                        characterListState = state
+                        characterListState = state,
+                        onEvent = viewModel::onEvent,
                     )
                 }
             }
